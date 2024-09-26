@@ -26,6 +26,7 @@ const register = async (req, res) => {
                 message: "User already exists"
             })
         } 
+
         let hashedPassword = await bcrypt.hash(newUserData.userPassword, saltRounds)
         let newUser = await usersModel.create({...newUserData, userPassword: hashedPassword})
         
@@ -55,7 +56,7 @@ const login = async (req, res) => {
                 message: "Incorrect password"
             })
         } else {
-            let token = jwt.sign({id: getUser._id}, process.env.TOKEN_SECRET)
+            let token = jwt.sign(payload = {userId: getUser._id, userRole: getUser.userRole}, process.env.TOKEN_SECRET)
             return res
             .cookie('jwt_token', token)
             .status(errorHandler.status.OK)
@@ -81,13 +82,127 @@ const getUsers = async (req, res) => {
     })
 }
 
-const getSingleUser = (req, res) => {}
+const getSingleUser = async (req, res) => {
+    let userId = req.params.id
+    let getUser = await usersModel.findById(userId)
 
-const addUser = (req, res) => {}
+    if (!getUser) {
+        res
+        .status(errorHandler.status.NOT_FOUND)
+        .json({
+            status: errorHandler.status.NOT_FOUND,
+            message: "User not found"
+        })
+    } else {
+        res
+        .status(errorHandler.status.OK)
+        .json({
+            status: errorHandler.status.OK,
+            message: "User fetched successfully",
+            object: getUser
+        })
+    }
+}
 
-const updateUser = (req, res) => {}
+const addUser = async (req, res) => {
+    let newUser = req.body
+    let validationErrors = validationResult(req)
+    try {
+        if (!validationErrors.isEmpty()) {
+            res
+            .status(errorHandler.status.BAD_REQUEST)
+            .json({
+                status: errorHandler.status.BAD_REQUEST,
+                message: validationErrors
+            })
+        } else if (usersModel.findOne({userEmail: newUser.userEmail})) {
+            res
+            .status(errorHandler.status.BAD_REQUEST)
+            .json({
+                status: errorHandler.status.BAD_REQUEST,
+                message: "User already exists"
+            })
+        } else if (usersModel.findOne({userName: newUser.userName})) {
+            res
+            .status(errorHandler.status.BAD_REQUEST)
+            .json({
+                status: errorHandler.status.BAD_REQUEST,
+                message: "User already exists"
+            })
+        } else {
+            await usersModel.create(newUser)
+            res
+            .status(errorHandler.status.CREATED)
+            .json({
+                status: errorHandler.status.CREATED,
+                message: "User added successfully",
+                object: newUser
+            })
+        }
+    } catch (error) {
+        return reportInternalError(res, error)
+    }
+    
+}
 
-const deleteUser = (req, res) => {}
+const updateUser = async (req, res) => {
+    let userId = req.params.id
+    let updatedUser = req.body
+
+    try {
+        if (!await usersModel.findById(userId)) {
+            res
+            .status(errorHandler.status.NOT_FOUND)
+            .json({
+                status: errorHandler.status.NOT_FOUND,
+                message: "User not found"
+            })
+        } else {
+            usersModel
+            .findByIdAndUpdate(userId, updatedUser)
+            .then((updatedUser) => {
+                res
+                .status(errorHandler.status.OK)
+                .json({
+                    status: errorHandler.status.OK,
+                    message: "User updated successfully",
+                    object: updatedUser
+                })
+            })
+        }
+    } catch (error) {
+        return reportInternalError(res, error)
+    }
+}
+
+const deleteUser = async (req, res) => {
+    let userId = req.params.id
+    
+    try {
+        if (!await usersModel.findById(userId)) {
+            res
+            .status(errorHandler.status.NOT_FOUND)
+            .json({
+                status: errorHandler.status.NOT_FOUND,
+                message: "User not found"
+            })
+        } else {
+            usersModel
+            .findByIdAndDelete(userId)
+            .then((deletedUser) => {
+                res
+                .status(errorHandler.status.OK)
+                .json({
+                    status: errorHandler.status.OK,
+                    message: "User deleted successfully",
+                    object: deletedUser
+                })
+            })
+        }
+    } catch (error) {
+        return reportInternalError(res, error)
+    }
+}
 
 module.exports = {
     register,
@@ -97,4 +212,11 @@ module.exports = {
     addUser,
     updateUser,
     deleteUser,
+}
+
+function reportInternalError(res, error) {
+    return res.status(errorHandler.status.INTERNAL_SERVER_ERROR).json({
+        status: errorHandler.status.INTERNAL_SERVER_ERROR,
+        message: error,
+    })
 }

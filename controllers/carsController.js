@@ -64,9 +64,9 @@ const getSingleCar = async (req, res) => {
  */
 const addCar = async (req, res) => {
     let newCar = req.body
-
+    let validationErrors = validationResult(req)
+    
     try {
-        let validationErrors = validationResult(req)
         if(!validationErrors.isEmpty()) {
             res
             .status(errorHandler.status.BAD_REQUEST)
