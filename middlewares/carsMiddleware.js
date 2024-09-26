@@ -3,6 +3,7 @@ const errorHandler = require('../utils/errorHandler')
 
 const carsMiddleware = (req, res, next) => {
     try {
+        next()
         let jwt_token = req.cookies?.jwt_token
         if(!jwt_token) {
             res

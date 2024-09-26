@@ -4,11 +4,10 @@ const carSchema = new mongoose.Schema({
     carName : String,
     carPrice : Number,
     carImage : String,
-    carDescription : String,
     carType : String,
     carSeats : Number,
-    carFuelCapacity : String,
-    carDriveType : String,
+    carFuelCapacity : Number,
+    carDriveType : {type: String, enum: ['manual', 'automatic']},
     carPriceIsDiscounted : Boolean,
     carDiscountedPrice : Number,
 })

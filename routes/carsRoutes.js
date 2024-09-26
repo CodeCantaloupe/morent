@@ -6,8 +6,11 @@ const carsMiddleware = require('../middlewares/carsMiddleware')
 
 router.route('/cars')
 .get(carsController.getCars)
-.post(carsMiddleware, carsValidation(), carsController.addCar)
-.patch(carsMiddleware, carsController.updateCar)
-.delete(carsMiddleware, carsController.deleteCar)
+.post(carsValidation(), carsController.addCar)
+
+router.route('/cars/:id')
+.get(carsController.getSingleCar)
+.patch(carsValidation(), carsController.updateCar)
+.delete(carsController.deleteCar)
 
 module.exports = router
