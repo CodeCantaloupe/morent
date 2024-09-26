@@ -7,4 +7,4 @@ const status = {
     INTERNAL_SERVER_ERROR: 500, 
 }
 
-module.exports = status
+module.exports = {status}

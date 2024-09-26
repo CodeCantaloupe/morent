@@ -7,7 +7,7 @@ const carSchema = new mongoose.Schema({
     carDescription : String,
     carType : String,
     carSeats : Number,
-    carFuelCapicity : String,
+    carFuelCapacity : String,
     carDriveType : String,
     carPriceIsDiscounted : Boolean,
     carDiscountedPrice : Number,

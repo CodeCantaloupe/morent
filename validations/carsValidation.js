@@ -1,6 +1,5 @@
 const carsModel = require('../models/carsModel')
-const errorHandler = require('../utils/errorHandler')
-const body = require('express-validator')
+const { body } = require('express-validator');
 
 const carsValidation = () => {
     return [
@@ -12,55 +11,51 @@ const carsValidation = () => {
         .custom(async (carName) => {
             const car = await carsModel.findOne({carName})
             if(car) {
-                res.status(errorHandler.status.BAD_REQUEST).body({
-                    status: errorHandler.status.BAD_REQUEST,
-                    message: 'Car name already exists'
-                })
+                console.log('Car name already exists')
+                throw new Error('Car name already exists')
             }
         }),
 
-        body(carPrice)
+        body("carPrice")
         .notEmpty()
         .withMessage('Car price is required'),
 
-        body(carImage)
+        body("carImage")
         .notEmpty()
         .withMessage('Car image is required')
         .custom(async (carImage) => {
             const car = await carsModel.findOne({carImage})
             if(car) {
-                res.status(errorHandler.status.BAD_REQUEST).body({
-                    status: errorHandler.status.BAD_REQUEST,
-                    message: 'Car image already exists'
-                })
+                console.log('Car image already exists')
+                throw new Error('Car image already exists')
             }
         }),
 
-        body(carDescription)
+        body("carDescription")
         .notEmpty()
         .withMessage('Car description is required'),
 
-        body(carType)
+        body("carType")
         .notEmpty()
         .withMessage('Car type is required'),
 
-        body(carSeats)
+        body("carSeats")
         .notEmpty()
         .withMessage('Car seats is required'),
 
-        body(carFuelCapicity)
+        body("carFuelCapacity")
         .notEmpty()
         .withMessage('Car fuel capicity is required'),
 
-        body(carDriveType)
+        body("carDriveType")
         .notEmpty()
         .withMessage('Car drive type is required'),
 
-        body(carPriceIsDiscounted)
+        body("carPriceIsDiscounted")
         .notEmpty()
         .withMessage('Car price is discounted is required'),
 
-        body(carDiscountedPrice)
+        body("carDiscountedPrice")
         .notEmpty()
         .withMessage('Car discounted price is required'),
     ]
