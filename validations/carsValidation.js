@@ -1,0 +1,69 @@
+const carsModel = require('../models/carsModel')
+const errorHandler = require('../utils/errorHandler')
+const body = require('express-validator')
+
+const carsValidation = () => {
+    return [
+        body('carName')
+        .notEmpty()
+        .withMessage('Car name is required')
+        .isLength({min: 3})
+        .withMessage('Car name must not be less than 3 characters')
+        .custom(async (carName) => {
+            const car = await carsModel.findOne({carName})
+            if(car) {
+                res.status(errorHandler.status.BAD_REQUEST).body({
+                    status: errorHandler.status.BAD_REQUEST,
+                    message: 'Car name already exists'
+                })
+            }
+        }),
+
+        body(carPrice)
+        .notEmpty()
+        .withMessage('Car price is required'),
+
+        body(carImage)
+        .notEmpty()
+        .withMessage('Car image is required')
+        .custom(async (carImage) => {
+            const car = await carsModel.findOne({carImage})
+            if(car) {
+                res.status(errorHandler.status.BAD_REQUEST).body({
+                    status: errorHandler.status.BAD_REQUEST,
+                    message: 'Car image already exists'
+                })
+            }
+        }),
+
+        body(carDescription)
+        .notEmpty()
+        .withMessage('Car description is required'),
+
+        body(carType)
+        .notEmpty()
+        .withMessage('Car type is required'),
+
+        body(carSeats)
+        .notEmpty()
+        .withMessage('Car seats is required'),
+
+        body(carFuelCapicity)
+        .notEmpty()
+        .withMessage('Car fuel capicity is required'),
+
+        body(carDriveType)
+        .notEmpty()
+        .withMessage('Car drive type is required'),
+
+        body(carPriceIsDiscounted)
+        .notEmpty()
+        .withMessage('Car price is discounted is required'),
+
+        body(carDiscountedPrice)
+        .notEmpty()
+        .withMessage('Car discounted price is required'),
+    ]
+}
+
+module.exports = carsValidation
