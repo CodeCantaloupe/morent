@@ -17,7 +17,8 @@ mongoose
 })
 
 app.use(express.json())
-app.use(cors())
+app.use(cors()) 
 app.use(cookieparser())
 
+app.use('/', require("./routes/usersRoutes"))
 app.use('/api', require('./routes/carsRoutes'))
