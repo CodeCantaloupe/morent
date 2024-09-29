@@ -1,20 +1,21 @@
-import axios from 'axios';
-import { useState, useEffect } from 'react';
-
+import Navbar from './components/Navbar/Navbar.jsx';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'; // eslint-disable-line
+import cookies from 'js-cookie'
+import { useEffect, useState } from 'react';
 const App = () => {
-  const [userName, setUserName] = useState('')
+
+  const [userLoggedIn, setUserLoggedIn] = useState(false)
 
   useEffect(() => {
-    axios
-    .get("http://localhost:5000/api/users/66f5295126ef1e2b1e704afd")
-    .then((response) => {
-      setUserName(response.data.object.userName)
-    })
-  }, [])
+
+    const token = cookies.get('jwt_token');
+    (token) ? setUserLoggedIn(true) : setUserLoggedIn(false)
+
+  }, [userLoggedIn])
 
   return (
     <>
-      <h1>{userName}</h1>
+      <Navbar userLoggedIn={userLoggedIn}/>
     </>
   )
 }
