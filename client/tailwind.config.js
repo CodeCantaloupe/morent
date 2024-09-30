@@ -8,6 +8,9 @@ export default {
   theme: {
     extend: {
       darkMode: 'class',
+      screens: {
+        xs: '320px',
+      },
       fontFamily: {
         'plus-jakarta-sans': ['Plus Jakarta Sans', 'sans-serif'],
       },

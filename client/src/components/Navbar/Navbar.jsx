@@ -10,7 +10,7 @@ const Navbar = ({userLoggedIn}) => {
     }, [userLoggedIn])
 
     return (
-        <nav className="min-w-full flex items-center justify-between bg-white p-4 lg:p-6 shadow">
+        <nav className="w-full flex items-center justify-between bg-white p-4 lg:p-6 shadow">
             <div className="flex items-center gap-3">
                 <h1 className="text-3xl font-bold text-primaryBlue-500">MORENT</h1>
                 <div className="sm:flex hidden border rounded-full py-2 px-6 gap-3 ml-6 w-full">

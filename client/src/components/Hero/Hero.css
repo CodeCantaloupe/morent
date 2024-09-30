@@ -1,0 +1,11 @@
+div {
+    overflow-x: hidden;
+}
+
+#ad-1 {
+    background-image: url('./Ads 1.png');
+}
+
+#ad-2 {
+    background-image: url('./Ads 2.png');
+}
