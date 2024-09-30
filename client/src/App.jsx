@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import Hero from './components/Hero/Hero.jsx';
 import BookingForm from './components/BookingForm/BookingForm.jsx';
 import PopularCars from './components/PopularCars/PopularCars.jsx';
+import Footer from './components/Footer/Footer.jsx';
 const App = () => {
 
   const [userLoggedIn, setUserLoggedIn] = useState(false)
@@ -19,9 +20,12 @@ const App = () => {
   return (
     <>
       <Navbar userLoggedIn={userLoggedIn}/>
-      <Hero/>
-      <BookingForm/>
-      <PopularCars/>
+      <main>
+        <Hero/>
+        <BookingForm/>
+        <PopularCars/>
+      </main>
+      <Footer></Footer>
     </>
   )
 }
