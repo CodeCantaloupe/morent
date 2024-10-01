@@ -6,28 +6,36 @@ import Hero from './components/Hero/Hero.jsx';
 import BookingForm from './components/BookingForm/BookingForm.jsx';
 import PopularCars from './components/PopularCars/PopularCars.jsx';
 import Footer from './components/Footer/Footer.jsx';
+import Register from './components/Register/Register.jsx';
+import Login from './components/Login/Login.jsx';
+
 const App = () => {
 
-  const [userLoggedIn, setUserLoggedIn] = useState(false)
+  const [userLoggedIn, setUserLoggedIn] = useState(true)
 
   useEffect(() => {
 
     const token = cookies.get('jwt_token');
     (token) ? setUserLoggedIn(true) : setUserLoggedIn(false)
 
-  }, [userLoggedIn])
+  }, [])
 
   return (
-    <>
-      <Navbar userLoggedIn={userLoggedIn}/>
-      <main>
-        <Hero/>
-        <BookingForm/>
-        <PopularCars/>
-      </main>
-      <Footer></Footer>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path='/' element={<>
+          <Navbar userLoggedIn={userLoggedIn}/>
+          <Hero/>
+          <BookingForm/>
+          <PopularCars/>
+          <Footer/>
+        </>}/>
+
+        <Route path='/register' element={<><Register/> <Footer/></>}/>
+        <Route path='/login' element={<><Login/> <Footer/></>}/>
+      </Routes>
+    </Router>
+  )  
 }
 
 export default App

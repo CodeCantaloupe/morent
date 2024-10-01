@@ -51,7 +51,7 @@ const Navbar = ({userLoggedIn}) => {
                             <img src="./profileImageExample1.png" alt="Profile"/>
                     </Link> 
                 :
-                    <Link to="/login" className="rounded-full size-10 border">
+                    <Link to="/register" className="rounded-full size-10 border">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" className="m-2" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
                             <circle cx="12" cy="7" r="5"></circle>
                             <path d="M12 12c-4.418 0-8 2.239-8 5v2h16v-2c0-2.761-3.582-5-8-5z"></path>

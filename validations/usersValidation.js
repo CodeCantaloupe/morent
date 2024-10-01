@@ -43,10 +43,6 @@ const usersValidation = () => {
         .matches(/[!@#$%^&*]/)
         .withMessage('User password must contain at least one special character'),
 
-        body('userAddress')
-        .notEmpty()
-        .withMessage('User address is required'),
-
         body('userProfileImage')
         .notEmpty()
         .withMessage('User profile image is required'),
