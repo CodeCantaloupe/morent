@@ -15,35 +15,36 @@ const register = async (req, res) => {
                 status: errorHandler.status.BAD_REQUEST,
                 message: validationErrors
             })
-        } else if (await usersModel.findOne({userEmail: newUserData.userEmail})) {
+
+        } else if (await usersModel.findOne({ userEmail: newUserData.userEmail })) {
             return res.status(errorHandler.status.BAD_REQUEST).json({
                 status: errorHandler.status.BAD_REQUEST,
                 message: "User already exists"
             })
-        } else if (await usersModel.findOne({userName: newUserData.userName})) {
+        } else if (await usersModel.findOne({ userName: newUserData.userName })) {
             return res.status(errorHandler.status.BAD_REQUEST).json({
                 status: errorHandler.status.BAD_REQUEST,
                 message: "User already exists"
             })
-        } 
+        }
 
         let hashedPassword = await bcrypt.hash(newUserData.userPassword, saltRounds)
-        let newUser = await usersModel.create({...newUserData, userPassword: hashedPassword})
-        
+        let newUser = await usersModel.create({ ...newUserData, userPassword: hashedPassword })
+
         return res.status(errorHandler.status.CREATED).json({
             status: errorHandler.status.CREATED,
             message: "New user registered successfully",
             object: newUser,
         })
     } catch (error) {
-        res.status(errorHandler.status.INTERNAL_SERVER_ERROR).json({message: error})
+        res.status(errorHandler.status.INTERNAL_SERVER_ERROR).json({ message: error })
     }
 }
 
 const login = async (req, res) => {
     try {
         let userCredentials = req.body
-        let getUser = await usersModel.findOne({userEmail: userCredentials.userEmail})
+        let getUser = await usersModel.findOne({ userEmail: userCredentials.userEmail })
 
         if (!getUser) {
             return res.status(errorHandler.status.NOT_FOUND).json({
@@ -56,21 +57,22 @@ const login = async (req, res) => {
                 message: "Incorrect password"
             })
         } else {
-            let token = jwt.sign(payload = {userId: getUser._id, userRole: getUser.userRole}, process.env.TOKEN_SECRET)
+            let token = jwt.sign(payload = { userId: getUser._id, userRole: getUser.userRole }, process.env.TOKEN_SECRET)
+
             return res
-            .cookie('jwt_token', token)
-            .status(errorHandler.status.OK)
-            .json({
-                status: errorHandler.status.OK,
-                message: "User logged in successfully",
-                token: token
-            })
+                .cookie('jwt_token', token, { httpOnly: true, sameSite: 'lax' })
+                .status(errorHandler.status.OK)
+                .json({
+                    status: errorHandler.status.OK,
+                    message: "User logged in successfully",
+                    token: token
+                })
         }
     } catch (error) {
         console.log(error);
         res
-        .status(errorHandler.status.INTERNAL_SERVER_ERROR)
-        .json({message: error})
+            .status(errorHandler.status.INTERNAL_SERVER_ERROR)
+            .json({ message: error })
     }
 }
 
@@ -88,19 +90,19 @@ const getSingleUser = async (req, res) => {
 
     if (!getUser) {
         res
-        .status(errorHandler.status.NOT_FOUND)
-        .json({
-            status: errorHandler.status.NOT_FOUND,
-            message: "User not found"
-        })
+            .status(errorHandler.status.NOT_FOUND)
+            .json({
+                status: errorHandler.status.NOT_FOUND,
+                message: "User not found"
+            })
     } else {
         res
-        .status(errorHandler.status.OK)
-        .json({
-            status: errorHandler.status.OK,
-            message: "User fetched successfully",
-            object: getUser
-        })
+            .status(errorHandler.status.OK)
+            .json({
+                status: errorHandler.status.OK,
+                message: "User fetched successfully",
+                object: getUser
+            })
     }
 }
 
@@ -110,39 +112,39 @@ const addUser = async (req, res) => {
     try {
         if (!validationErrors.isEmpty()) {
             res
-            .status(errorHandler.status.BAD_REQUEST)
-            .json({
-                status: errorHandler.status.BAD_REQUEST,
-                message: validationErrors
-            })
-        } else if (usersModel.findOne({userEmail: newUser.userEmail})) {
+                .status(errorHandler.status.BAD_REQUEST)
+                .json({
+                    status: errorHandler.status.BAD_REQUEST,
+                    message: validationErrors
+                })
+        } else if (usersModel.findOne({ userEmail: newUser.userEmail })) {
             res
-            .status(errorHandler.status.BAD_REQUEST)
-            .json({
-                status: errorHandler.status.BAD_REQUEST,
-                message: "User already exists"
-            })
-        } else if (usersModel.findOne({userName: newUser.userName})) {
+                .status(errorHandler.status.BAD_REQUEST)
+                .json({
+                    status: errorHandler.status.BAD_REQUEST,
+                    message: "User already exists"
+                })
+        } else if (usersModel.findOne({ userName: newUser.userName })) {
             res
-            .status(errorHandler.status.BAD_REQUEST)
-            .json({
-                status: errorHandler.status.BAD_REQUEST,
-                message: "User already exists"
-            })
+                .status(errorHandler.status.BAD_REQUEST)
+                .json({
+                    status: errorHandler.status.BAD_REQUEST,
+                    message: "User already exists"
+                })
         } else {
             await usersModel.create(newUser)
             res
-            .status(errorHandler.status.CREATED)
-            .json({
-                status: errorHandler.status.CREATED,
-                message: "User added successfully",
-                object: newUser
-            })
+                .status(errorHandler.status.CREATED)
+                .json({
+                    status: errorHandler.status.CREATED,
+                    message: "User added successfully",
+                    object: newUser
+                })
         }
     } catch (error) {
         return reportInternalError(res, error)
     }
-    
+
 }
 
 const updateUser = async (req, res) => {
@@ -150,25 +152,25 @@ const updateUser = async (req, res) => {
     let updatedUser = req.body
 
     try {
-        if (!await usersModel.findById(userId)) {
-            res
-            .status(errorHandler.status.NOT_FOUND)
-            .json({
-                status: errorHandler.status.NOT_FOUND,
-                message: "User not found"
-            })
-        } else {
-            usersModel
-            .findByIdAndUpdate(userId, updatedUser)
-            .then((updatedUser) => {
-                res
-                .status(errorHandler.status.OK)
+        if (!usersModel.findById(userId)) {
+            return res
+                .status(errorHandler.status.NOT_FOUND)
                 .json({
-                    status: errorHandler.status.OK,
-                    message: "User updated successfully",
-                    object: updatedUser
+                    status: errorHandler.status.NOT_FOUND,
+                    message: "User not found"
                 })
-            })
+        } else {
+            return usersModel
+                .findByIdAndUpdate(userId, updatedUser)
+                .then((updatedUser) => {
+                    res
+                        .status(errorHandler.status.OK)
+                        .json({
+                            status: errorHandler.status.OK,
+                            message: "User updated successfully",
+                            object: updatedUser
+                        })
+                })
         }
     } catch (error) {
         return reportInternalError(res, error)
@@ -177,27 +179,27 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     let userId = req.params.id
-    
+
     try {
         if (!await usersModel.findById(userId)) {
             res
-            .status(errorHandler.status.NOT_FOUND)
-            .json({
-                status: errorHandler.status.NOT_FOUND,
-                message: "User not found"
-            })
+                .status(errorHandler.status.NOT_FOUND)
+                .json({
+                    status: errorHandler.status.NOT_FOUND,
+                    message: "User not found"
+                })
         } else {
             usersModel
-            .findByIdAndDelete(userId)
-            .then((deletedUser) => {
-                res
-                .status(errorHandler.status.OK)
-                .json({
-                    status: errorHandler.status.OK,
-                    message: "User deleted successfully",
-                    object: deletedUser
+                .findByIdAndDelete(userId)
+                .then((deletedUser) => {
+                    res
+                        .status(errorHandler.status.OK)
+                        .json({
+                            status: errorHandler.status.OK,
+                            message: "User deleted successfully",
+                            object: deletedUser
+                        })
                 })
-            })
         }
     } catch (error) {
         return reportInternalError(res, error)

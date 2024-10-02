@@ -12,7 +12,7 @@ const Navbar = ({userLoggedIn}) => {
     return (
         <nav className="w-full flex items-center justify-between bg-white p-4 lg:p-6 shadow">
             <div className="flex items-center gap-3">
-                <h1 className="text-3xl font-bold text-primaryBlue-500">MORENT</h1>
+                <Link to={"/"} className="text-3xl font-bold text-primaryBlue-500">MORENT</Link>
                 <div className="sm:flex hidden border rounded-full py-2 px-6 gap-3 ml-6 w-full">
                     <img src="/icons/search-normal.svg" alt="search icon" className="size-6" />
                     <input type="text" placeholder="Search cars" className="bg-transparent outline-none placeholder-slate-500" />
@@ -47,11 +47,11 @@ const Navbar = ({userLoggedIn}) => {
                 </Link>
 
                 {loggedIn ? 
-                    <Link to="/profile" className="rounded-full size-10 border">
+                    <Link to="/dashboard" className="rounded-full size-10 border">
                             <img src="./profileImageExample1.png" alt="Profile"/>
                     </Link> 
                 :
-                    <Link to="/register" className="rounded-full size-10 border">
+                    <Link to="/login" className="rounded-full size-10 border">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" className="m-2" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
                             <circle cx="12" cy="7" r="5"></circle>
                             <path d="M12 12c-4.418 0-8 2.239-8 5v2h16v-2c0-2.761-3.582-5-8-5z"></path>

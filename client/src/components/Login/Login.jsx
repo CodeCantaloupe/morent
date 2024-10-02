@@ -16,11 +16,15 @@ const Login = () => {
             userPassword: password
         }
 
-        axios.post('http://localhost:5000/login', userInfo)
+        axios.post('http://localhost:5000/login', userInfo, {withCredentials: true})
             .then(res => {
-                toast.success(res.data.message)
-                navigate('/')
-                console.log(res.data.message);
+                if (res.status == 200) {
+                    toast.success(res.data.message)
+                    localStorage.setItem('isLoggedIn', true);
+                    navigate('/')
+                    console.log(res.data.message);
+                }
+                    
             })
             .catch(err => {
                 console.log(err.response);

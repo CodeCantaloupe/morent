@@ -1,6 +1,5 @@
 import Navbar from './components/Navbar/Navbar.jsx';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'; // eslint-disable-line
-import cookies from 'js-cookie'
 import { useEffect, useState } from 'react';
 import Hero from './components/Hero/Hero.jsx';
 import BookingForm from './components/BookingForm/BookingForm.jsx';
@@ -8,17 +7,21 @@ import PopularCars from './components/PopularCars/PopularCars.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import Register from './components/Register/Register.jsx';
 import Login from './components/Login/Login.jsx';
+import Dashboard from './components/Dashboard/Dashboard.jsx';
+import UsersDashboard from './components/UsersDashboard/UsersDashboard.jsx';
+import CarsDashboard from './components/CarsDashboard/CarsDashboard.jsx';
 
 const App = () => {
 
-  const [userLoggedIn, setUserLoggedIn] = useState(true)
+  const [userLoggedIn, setUserLoggedIn] = useState(false)
 
   useEffect(() => {
 
-    const token = cookies.get('jwt_token');
-    (token) ? setUserLoggedIn(true) : setUserLoggedIn(false)
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      setUserLoggedIn(true)
+    }
 
-  }, [])
+  }, [userLoggedIn])
 
   return (
     <Router>
@@ -33,6 +36,10 @@ const App = () => {
 
         <Route path='/register' element={<><Register/> <Footer/></>}/>
         <Route path='/login' element={<><Login/> <Footer/></>}/>
+        <Route path='/dashboard' element={<><Navbar userLoggedIn={userLoggedIn}/> <Dashboard/> <Footer/></>}>
+          <Route path='/dashboard/users' element={<UsersDashboard/>}/>
+          <Route path='/dashboard/cars' element={<CarsDashboard/>}/>
+        </Route>
       </Routes>
     </Router>
   )  

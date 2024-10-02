@@ -114,7 +114,7 @@ const updateCar = async (req, res) => {
     if (updatedCar && validationErrors.isEmpty()) {
         return res.status(errorHandler.status.OK).json({
             status: errorHandler.status.OK,
-            message: `Car ${carId} updated successfully`,
+            message: `Car updated successfully`,
             object: updatedCar
         })
     } else if (!updatedCar) {
@@ -147,7 +147,7 @@ const deleteCar = async (req, res) => {
     if (car) {
         return res.status(errorHandler.status.OK).json({
             status: errorHandler.status.OK,
-            message: `Car ${carId} deleted successfully`
+            message: `Car deleted successfully`
         })
     }
     return res.status(errorHandler.status.NOT_FOUND).json({

@@ -46,14 +46,6 @@ const carsValidation = () => {
         body("carDriveType")
         .notEmpty()
         .withMessage('Car drive type is required'),
-
-        body("carPriceIsDiscounted")
-        .notEmpty()
-        .withMessage('Car price is discounted is required'),
-
-        body("carDiscountedPrice")
-        .notEmpty()
-        .withMessage('Car discounted price is required'),
     ]
 }
 

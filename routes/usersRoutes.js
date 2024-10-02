@@ -5,13 +5,12 @@ const usersController = require('../controllers/usersController')
 const usersMiddleware = require('../middlewares/usersMiddleware')
 
 router.route('/api/users')
-.get(usersMiddleware, usersController.getUsers)
-.post(usersMiddleware,usersValidation(), usersController.addUser)
+.get(usersController.getUsers)
 
 router.route('/api/users/:id')
 .get(usersController.getSingleUser)
-.patch(usersMiddleware, usersValidation(), usersController.updateUser)
-.delete(usersMiddleware, usersController.deleteUser)
+.patch(usersValidation(), usersController.updateUser)
+.delete(usersController.deleteUser)
 
 router.route('/login')
 .post(usersController.login)

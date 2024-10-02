@@ -1,11 +1,11 @@
-
+import {Link} from 'react-router-dom'
 const Footer = () => {
   return (
     <footer className="bg-white font-plus-jakarta-sans">
         {/*Top Footer*/}
         <div className=" p-20 flex justify-between">  
             <div className="space-y-4">        
-                <h1 className="text-3xl font-bold text-primaryBlue-500">MORENT</h1>
+                <Link to={"/"} className="text-3xl font-bold text-primaryBlue-500">MORENT</Link>
                 <p className="text-slate-500 text-lg">Our vision is to provide convenience <br/> and help increase your sales business.</p>
             </div>
             <div className="flex space-x-24">
@@ -32,7 +32,9 @@ const Footer = () => {
                 </div>
             </div>
         </div>
+
         <hr className="my-4 mx-6"/>
+        
         <div className="p-12 font-bold text-xl flex items-center justify-between">
             <p className="">© 2022 MORENT. All rights reserved</p>
             <div className="space-x-6 flex">

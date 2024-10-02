@@ -8,8 +8,6 @@ const carSchema = new mongoose.Schema({
     carSeats : Number,
     carFuelCapacity : Number,
     carDriveType : {type: String, enum: ['manual', 'automatic']},
-    carPriceIsDiscounted : {type: Boolean, default: false},
-    carDiscountedPrice : {type: Number, default: this.carPrice},
 })
 
 const carsModel = mongoose.model('cars', carSchema)
