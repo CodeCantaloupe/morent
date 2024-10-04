@@ -9,7 +9,9 @@ const Hero = () => {
                 <p className='w-1/2'>Ease of doing a car rental safely and reliably.
                      Of course at a low price
                 </p>
-                <button className='text-center py-2 px-4 font-semibold bg-primaryBlue-500 hover:bg-primaryBlue-600 active:bg-primaryBlue-700 transition rounded'>Rental Car</button>
+                <button className='text-center py-2 px-4 font-semibold bg-primaryBlue-500 hover:bg-primaryBlue-600 active:bg-primaryBlue-700 transition rounded'>
+                    <a href='#popularCars'>Rental Car</a>
+                </button>
             </div>
             <img className='absolute bottom-5 right-5 w-1/2' src="./cars/Car1.png" alt="" />
         </div>
@@ -21,7 +23,9 @@ const Hero = () => {
                     Providing cheap car rental services
                     and safe and comfortable facilities.
                 </p>
-                <button className='text-center py-2 px-4 font-semibold bg-primaryBlue-400 hover:bg-sky-300 active:bg-sky-500 transition rounded'>Rental Car</button>
+                <button className='text-center py-2 px-4 font-semibold bg-primaryBlue-400 hover:bg-sky-300 active:bg-sky-500 transition rounded'>
+                    <a href='#popularCars'>Rental Car</a>
+                </button>
             </div>
             <img className='absolute bottom-5 right-5 w-1/2' src="./cars/Car2.png" alt="" />
         </div>

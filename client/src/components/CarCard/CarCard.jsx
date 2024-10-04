@@ -1,7 +1,8 @@
 import { useState } from "react";
 import propTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-const CarCard = ({carName, carType, carPrice, carImage, carFuel, carDriveType, carSeats}) => {
+const CarCard = ({carName, carType, carPrice, carImage, carFuel, carDriveType, carSeats, carId}) => {
     const [isChecked, setIsChecked] = useState(false);
 
     return (
@@ -54,7 +55,9 @@ const CarCard = ({carName, carType, carPrice, carImage, carFuel, carDriveType, c
                     <p className="text-2xl font-bold">${carPrice}/
                         <span className="text-lg text-slate-500"> day</span>
                     </p>
-                    <button className="text-center py-3 px-5 font-semibold text-white bg-primaryBlue-500 hover:bg-primaryBlue-600 active:bg-primaryBlue-700 transition rounded">Rent Now</button>
+                    <Link to={`/car/${carId}`} className="text-center py-3 px-5 font-semibold text-white bg-primaryBlue-500 hover:bg-primaryBlue-600 active:bg-primaryBlue-700 transition rounded">
+                        Rent Now
+                    </Link>
                 </div>
             </div>
         </div>
@@ -68,7 +71,8 @@ CarCard.propTypes = {
     carImage: propTypes.string.isRequired,
     carFuel: propTypes.number.isRequired,
     carDriveType: propTypes.string.isRequired,
-    carSeats: propTypes.number.isRequired
+    carSeats: propTypes.number.isRequired,
+    carId: propTypes.string.isRequired,
 }
 
 export default CarCard
