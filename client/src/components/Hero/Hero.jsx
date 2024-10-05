@@ -13,7 +13,7 @@ const Hero = () => {
                     <a href='#popularCars'>Rental Car</a>
                 </button>
             </div>
-            <img className='absolute bottom-5 right-5 w-1/2' src="./cars/Car1.png" alt="" />
+            <img className='absolute bottom-5 right-5 w-1/2' src="/cars/Car1.png" alt="" />
         </div>
 
         <div className="hidden md:flex bg-center flex-grow relative p-6 mr-12 rounded-lg h-72 bg-no-repeat bg-cover flex-1" id="ad-2">
@@ -27,7 +27,7 @@ const Hero = () => {
                     <a href='#popularCars'>Rental Car</a>
                 </button>
             </div>
-            <img className='absolute bottom-5 right-5 w-1/2' src="./cars/Car2.png" alt="" />
+            <img className='absolute bottom-5 right-5 w-1/2' src="/cars/Car2.png" alt="" />
         </div>
     </div>
   )

@@ -34,20 +34,20 @@ const CarCard = ({carName, carType, carPrice, carImage, carFuel, carDriveType, c
             </div>
             <p className="text-slate-500">{carType}</p>
             
-            <img className="my-12 mx-auto max-h-[90%]" src={"./cars/" +carImage}/>
+            <img className="my-12 mx-auto max-h-[90%]" src={"/cars/" +carImage}/>
 
             <div>
                 <div className="flex justify-between">
                     <div className="flex gap-1">
-                        <img src="./icons/gas-station.svg" alt="" />
+                        <img src="/icons/gas-station.svg" alt="" />
                         <p className="text-slate-500">{carFuel}L</p>
                     </div>
                     <div className="flex gap-1">
-                        <img src="./icons/drive-type.svg" alt="" />
+                        <img src="/icons/drive-type.svg" alt="" />
                         <p className="text-slate-500 capitalize">{carDriveType}</p>
                     </div>
                     <div className="flex gap-1">
-                        <img src="./icons/profile-2user.svg" alt="" />
+                        <img src="/icons/profile-2user.svg" alt="" />
                         <p className="text-slate-500">{carSeats} People</p>
                     </div>
                 </div>

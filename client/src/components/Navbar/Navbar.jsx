@@ -48,7 +48,7 @@ const Navbar = ({userLoggedIn}) => {
 
                 {loggedIn ? 
                     <Link to="/login" className="rounded-full size-10 border">
-                            <img src="./profileImageExample1.png" alt="Profile"/>
+                            <img src="/profileImageExample1.png" alt="Profile"/>
                     </Link> 
                 :
                     <Link to="/login" className="rounded-full size-10 border">
