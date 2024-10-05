@@ -11,6 +11,7 @@ import Dashboard from './components/Dashboard/Dashboard.jsx';
 import UsersDashboard from './components/UsersDashboard/UsersDashboard.jsx';
 import CarsDashboard from './components/CarsDashboard/CarsDashboard.jsx';
 import CarDetails from './components/CarDetails/CarDetails.jsx';
+import DefaultDashboard from './components/DefaultDashboard/DefaultDashboard.jsx';
 
 const App = () => {
 
@@ -40,6 +41,7 @@ const App = () => {
         <Route path='/dashboard' element={<><Navbar userLoggedIn={userLoggedIn}/> <Dashboard/> <Footer/></>}>
           <Route path='/dashboard/users' element={<UsersDashboard/>}/>
           <Route path='/dashboard/cars' element={<CarsDashboard/>}/>
+          <Route path='/dashboard/' element={<DefaultDashboard/>}/>
         </Route>
         <Route path='/car/:id' element={<><Navbar userLoggedIn={userLoggedIn}/><CarDetails/><Footer/></>}/>
       </Routes>

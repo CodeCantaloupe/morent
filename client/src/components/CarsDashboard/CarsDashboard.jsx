@@ -97,8 +97,10 @@ const CarsDashboard = () => {
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
-                    toast.error(err.response.data.message)
+                    console.log(err);
+                    (err.response.data.message.errors).forEach(error => {
+                        toast.error(error.msg)
+                    });
                 });
         }
     }
